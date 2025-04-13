@@ -1,0 +1,57 @@
+/* Responsive */
+/* Responsive */
+.smart-input {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.smart-input label {
+  font-weight: 600;
+}
+.smart-input input {
+  width: 300px;
+  padding: 0.7rem 1rem;
+  background-color: #F78EA1;
+  color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  transition: border-color 0.3s ease;
+}
+.smart-input input:focus {
+  border: 2px solid #C84754;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+}
+.smart-input input::-moz-placeholder {
+  color: #ccc;
+}
+.smart-input input::placeholder {
+  color: #ccc;
+}
+
+button[type=submit] {
+  padding: 0.75rem 1.5rem;
+  background-color: #C84754;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: background-color 0.3s ease;
+}
+button[type=submit]:hover {
+  background-color: #47c8b6;
+}
+button[type=submit] .error-message {
+  color: #e53935;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+button[type=submit] input[aria-invalid=true] {
+  border-color: #e53935;
+}
+button[type=submit] input[aria-invalid=true]:focus {
+  box-shadow: 0 0 0 2px rgba(229, 57, 53, 0.2);
+}/*# sourceMappingURL=SmartInput.css.map */

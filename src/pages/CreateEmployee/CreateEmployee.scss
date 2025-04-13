@@ -1,0 +1,14 @@
+@use "../../styles/utils/variables" as *;
+@use "../../styles/utils/mixins" as *;
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 500px;
+  margin: 0 auto;
+
+  @include responsive-tablet {
+    padding: 2rem;
+  }
+}

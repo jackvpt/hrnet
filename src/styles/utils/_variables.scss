@@ -1,0 +1,18 @@
+// /* Fonts */
+$font_body: "Roboto", sans-serif !default;
+
+// /* Colors */
+$primary-color: #C84754;
+$secondary-color: #F78EA1;
+$button-bg-color: #C84754;
+$button-text-color:#fff;
+$text-color:#000;
+
+
+/* Responsive */
+$breakpoints: (
+  mobile: 370px,
+  tablet: 768px,
+  desktop: 1024px,
+  large-desktop: 1280px,
+);
