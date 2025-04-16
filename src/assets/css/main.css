@@ -55,15 +55,15 @@ h6 {
 }
 
 h1 {
-  font-size: 2.5rem;
-}
-
-h2 {
   font-size: 2rem;
 }
 
-h3 {
+h2 {
   font-size: 1.75rem;
+}
+
+h3 {
+  font-size: 1.5rem;
 }
 
 p {
@@ -77,15 +77,15 @@ main {
 
 .section__main {
   margin: 0 auto;
-  padding: 20px 20px;
+  padding: 10px;
 }
 @media all and (min-width: 1024px) {
   .section__main {
-    padding: 30px 50px;
+    padding: 20px 30px;
   }
 }
 @media all and (min-width: 1280px) {
   .section__main {
-    padding: 50px 100px;
+    padding: 30px 50px;
   }
 }/*# sourceMappingURL=main.css.map */

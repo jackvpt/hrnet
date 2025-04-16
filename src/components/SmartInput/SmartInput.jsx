@@ -13,16 +13,42 @@ const SmartInput = ({
   maxLength,
   minLength,
   autoComplete = "on",
+  errorMessage = "",
+  dateValidity = null,
 }) => {
   const [error, setError] = useState("")
 
   const handleBlur = (e) => {
-    const { validity, validationMessage } = e.target
+    const { validity, validationMessage, value } = e.target
+    const inputDate = new Date(value)
+    const today = new Date()
+
     if (!validity.valid) {
-      setError(validationMessage)
-    } else {
-      setError("")
+      setError(errorMessage || validationMessage)
+      return
     }
+
+    if (dateValidity) {
+      if (!dateValidity.futureAllowed && inputDate > today) {
+        setError("Date can't be in the future.")
+        return
+      }
+
+      if (dateValidity.minimumAge) {
+        const ageDiff = today - inputDate
+        const ageDate = new Date(ageDiff)
+        const age = Math.abs(ageDate.getUTCFullYear() - 1970)
+
+        if (age < dateValidity.minimumAge) {
+          setError(
+            `Minimum age is ${dateValidity.minimumAge} ans.`
+          )
+          return
+        }
+      }
+    }
+
+    setError("")
   }
 
   return (

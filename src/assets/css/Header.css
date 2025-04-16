@@ -20,7 +20,7 @@ header .logo__image {
   height: 60px;
 }
 header .logo__title {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   color: #fff;
   margin-left: 20px;
 }
@@ -34,7 +34,7 @@ header .logo__title {
   gap: 20px;
 }
 .navbar__link, .navbar__link--active {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   text-decoration: none;
   color: #fff;
 }

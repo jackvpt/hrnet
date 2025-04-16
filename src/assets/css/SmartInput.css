@@ -3,18 +3,20 @@
 .smart-input {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.3rem;
 }
 .smart-input label {
   font-weight: 600;
+  font-size: 0.6rem;
 }
 .smart-input input {
   width: 300px;
-  padding: 0.7rem 1rem;
+  padding: 0.5rem 0.8rem;
   background-color: #F78EA1;
   color: #fff;
+  font-size: 0.8rem;
   border: 1px solid #ccc;
-  border-radius: 0.5rem;
+  border-radius: 0.2rem;
   transition: border-color 0.3s ease;
 }
 .smart-input input:focus {
@@ -28,30 +30,13 @@
 .smart-input input::placeholder {
   color: #ccc;
 }
-
-button[type=submit] {
-  padding: 0.75rem 1.5rem;
-  background-color: #C84754;
-  color: #fff;
-  font-size: 1rem;
-  font-weight: 600;
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  align-self: flex-start;
-  transition: background-color 0.3s ease;
-}
-button[type=submit]:hover {
-  background-color: #47c8b6;
-}
-button[type=submit] .error-message {
+.smart-input .error-message {
   color: #e53935;
-  font-size: 0.875rem;
-  margin-top: 0.25rem;
+  font-size: 0.6rem;
 }
-button[type=submit] input[aria-invalid=true] {
+.smart-input input[aria-invalid=true] {
   border-color: #e53935;
 }
-button[type=submit] input[aria-invalid=true]:focus {
+.smart-input input[aria-invalid=true]:focus {
   box-shadow: 0 0 0 2px rgba(229, 57, 53, 0.2);
 }/*# sourceMappingURL=SmartInput.css.map */
