@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import "./CreateEmployee.scss"
 import SmartInput from "../../components/SmartInput/SmartInput"
 import states from "../../data/states"
+import Modal from "../../components/Modal/Modal"
 
 /**
  * Error page component displayed for non-existing routes (404 error).
@@ -14,24 +15,39 @@ import states from "../../data/states"
 
 const CreateEmployee = () => {
   const [form, setForm] = useState({
-    firstName: "",
-    lastName: "",
-    birthDate: "",
-    address: "",
-    postalCode: "",
-    city: "",
+    firstName: "Prénom",
+    lastName: "Nom",
+    birthDate: "2000-01-01",
+    startDate: "2020-12-25",
+    street: "123 rue de Paris",
+    address: "Adresse",
+    postalCode: "99999",
+    city: "City",
   })
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const handleChange = (e) => {
     const { name, value } = e.target
     setForm((prev) => ({ ...prev, [name]: value }))
   }
 
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    const formElement = e.target
+    if (!formElement.checkValidity()) {
+      formElement.reportValidity()
+      return
+    }
+    setIsModalOpen(true)
+  }
+
   return (
     <section className="container_create_employee">
       <h1 className="container_create_employee__title">Create Employee</h1>
 
-      <form>
+      <form onSubmit={handleSubmit} noValidate>
         <SmartInput
           label="First name"
           name="firstName"
@@ -109,18 +125,33 @@ const CreateEmployee = () => {
 
           <SmartInput
             label="Zip code"
-            name="zipCode"
+            name="postalCode"
             placeholder="75000"
             value={form.postalCode}
             onChange={handleChange}
             required
-            pattern="^\d{5}$"
+            pattern="\d{5}"
             errorMessage="5 digits"
           />
         </fieldset>
 
         <button type="submit">Save</button>
       </form>
+
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        modalElements={{
+          title: "HRNET",
+          subtitle: "New employee created",
+          text: `Employee '${form.firstName} ${form.lastName}' has been created successfully`,
+          htmlElement:`<p>Employee '${form.firstName} ${form.lastName}' has been created successfully</p>`,
+        }}
+        modalOptions={{
+          headerBackgroundColor: "lightgreen",
+          headerTextColor: "black",
+        }}
+      ></Modal>
     </section>
   )
 }

@@ -40,9 +40,7 @@ const SmartInput = ({
         const age = Math.abs(ageDate.getUTCFullYear() - 1970)
 
         if (age < dateValidity.minimumAge) {
-          setError(
-            `Minimum age is ${dateValidity.minimumAge} ans.`
-          )
+          setError(`Minimum age is ${dateValidity.minimumAge}.`)
           return
         }
       }
