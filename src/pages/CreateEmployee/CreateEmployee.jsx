@@ -236,9 +236,10 @@ const CreateEmployee = () => {
         modalOptions={{
           headerBackgroundColor: "lightgreen",
           headerTextColor: "black",
-          backdropColor: "rgba(0, 0, 0, 0.5)",
+          backdropColor: "rgba(0, 0, 0, 0.8)",
           shadowed: true,
         }}
+        fadeDuration={500}
       ></Modal>
     </section>
   )

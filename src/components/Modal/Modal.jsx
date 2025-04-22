@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import PropTypes from "prop-types"
 import "./Modal.scss"
 
@@ -12,15 +12,14 @@ import "./Modal.scss"
  * @param {Object} props.modalElements - Elements to display in the modal.
  * @param {string} props.modalElements.title - Modal title text.
  * @param {string} props.modalElements.subtitle - Modal subtitle text.
- * @param {string} [props.modalElements.text] - Optional plain text message.
- * @param {React.ReactNode} [props.modalElements.htmlElement] - Optional custom HTML or JSX to render.
+ * @param {string} props.modalElements.text - Optional plain text message.
+ * @param {React.ReactNode} props.modalElements.htmlElement - Optional custom HTML or JSX to render.
  * @param {Object} [props.modalOptions] - Optional style and layout options.
- * @param {string} [props.modalOptions.headerBackgroundColor="#fff"] - Header background color.
- * @param {string} [props.modalOptions.headerTextColor="#000"] - Header text color.
- * @param {string} [props.modalOptions.backdropColor="rgba(0, 0, 0, 0.7)"] - Backdrop background color.
+ * @param {string} [props.modalOptions.headerBackgroundColor] - Header background color.
+ * @param {string} [props.modalOptions.headerTextColor] - Header text color.
+ * @param {string} [props.modalOptions.backdropColor] - Backdrop background color.
  * @param {boolean} [props.modalOptions.shadowed=true] - Whether to apply a shadow to the modal.
- *
- * @returns {JSX.Element|null} Rendered modal component or null if not open.
+ * @param {number} [props.fadeDuration=3000] - Duration of the fade animation in ms.
  *
  * @example
  * <Modal
@@ -38,44 +37,57 @@ import "./Modal.scss"
  *     backdropColor: "rgba(0, 0, 0, 0.5)",
  *     shadowed: true
  *   }}
+ *   fadeDuration={500}
  * />
  */
-const Modal = ({ isOpen, onClose, modalElements, modalOptions }) => {
-  if (!isOpen) return null
+const Modal = ({ isOpen, onClose, modalElements, modalOptions = {}, fadeDuration = 300 }) => {
+  const [visible, setVisible] = useState(isOpen)
+  const [fadeState, setFadeState] = useState("fade-in")
 
-  const mergedModalOptions = {
-    headerBackgroundColor: "#fff",
-    headerTextColor: "#000",
-    backdropColor: "rgba(0, 0, 0, 0.7)",
-    shadowed: true,
-    ...modalOptions,
-  }
+  useEffect(() => {
+    if (isOpen) {
+      setVisible(true)
+      setFadeState("fade-in")
+    } else {
+      setFadeState("fade-out")
+      const timer = setTimeout(() => setVisible(false), fadeDuration)
+      return () => clearTimeout(timer)
+    }
+  }, [isOpen, fadeDuration])
+
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === "Escape") {
+        onClose()
+      }
+    }
+    document.addEventListener("keydown", handleEscape)
+    return () => document.removeEventListener("keydown", handleEscape)
+  }, [onClose])
+
+  if (!visible) return null
 
   const headerStyle = {
-    backgroundColor: mergedModalOptions.headerBackgroundColor,
-    color: mergedModalOptions.headerTextColor,
-  }
-
-  /**
-   * Handles click on the modal backdrop to close the modal.
-   * Closes the modal only if the backdrop itself (not the content) is clicked.
-   *
-   * @param {React.MouseEvent<HTMLDivElement>} e - The mouse event from the click.
-   */
-  const handleBackdropClick = (e) => {
-    if (e.target.className === "modal-backdrop") {
-      onClose()
-    }
+    backgroundColor: modalOptions.headerBackgroundColor,
+    color: modalOptions.headerTextColor,
   }
 
   return (
     <div
-      className="modal-backdrop"
-      style={{ backgroundColor: mergedModalOptions.backdropColor }}
-      onClick={handleBackdropClick}
+      className={`modal-backdrop ${fadeState}`}
+      style={{
+        backgroundColor: modalOptions.backdropColor || "rgba(0,0,0,0.7)",
+        transitionDuration: `${fadeDuration}ms`,
+      }}
+      onClick={(e) => {
+        if (e.target.className.includes("modal-backdrop")) {
+          onClose()
+        }
+      }}
     >
       <div
-        className={`modal-content ${mergedModalOptions.shadowed ? "shadowed" : ""}`}
+        className={`modal-content ${modalOptions.shadowed !== false ? "shadowed" : ""}`}
+        style={{ transitionDuration: `${fadeDuration}ms` }}
       >
         <div className="modal-header" style={headerStyle}>
           <h2 className="modal-title">{modalElements.title}</h2>
@@ -83,11 +95,8 @@ const Modal = ({ isOpen, onClose, modalElements, modalOptions }) => {
             &times;
           </button>
         </div>
-
         <h3 className="modal-subtitle">{modalElements.subtitle}</h3>
-        {modalElements.text && (
-          <p className="modal-text">{modalElements.text}</p>
-        )}
+        {modalElements.text && <p className="modal-text">{modalElements.text}</p>}
         <div className="modal-htmlElement">{modalElements.htmlElement}</div>
       </div>
     </div>
@@ -98,8 +107,8 @@ Modal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   modalElements: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    subtitle: PropTypes.string.isRequired,
+    title: PropTypes.string,
+    subtitle: PropTypes.string,
     text: PropTypes.string,
     htmlElement: PropTypes.node,
   }).isRequired,
@@ -109,6 +118,7 @@ Modal.propTypes = {
     backdropColor: PropTypes.string,
     shadowed: PropTypes.bool,
   }),
+  fadeDuration: PropTypes.number,
 }
 
 export default Modal
