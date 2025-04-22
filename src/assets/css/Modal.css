@@ -4,7 +4,6 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -20,6 +19,10 @@
   position: relative;
   min-width: 300px;
   max-width: 90%;
+}
+
+.shadowed {
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
 }
 
 .modal-header {
@@ -54,5 +57,9 @@
 }
 
 .modal-text {
+  padding: 10px 20px;
+}
+
+.modal-htmlElement {
   padding: 10px 20px;
 }/*# sourceMappingURL=Modal.css.map */

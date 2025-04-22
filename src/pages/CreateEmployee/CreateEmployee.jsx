@@ -1,28 +1,31 @@
-import React, { useState } from "react"
-import { Link } from "react-router-dom"
 import "./CreateEmployee.scss"
-import SmartInput from "../../components/SmartInput/SmartInput"
-import states from "../../data/states"
+import { useState } from "react"
+import {
+  TextField,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Button,
+} from "@mui/material"
+import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers"
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns"
 import Modal from "../../components/Modal/Modal"
-
-/**
- * Error page component displayed for non-existing routes (404 error).
- *
- * @category Components
- * @component
- * @returns {JSX.Element} The Error page component with a 404 message and a link to the home page.
- */
+import states from "../../data/states"
+import departments from "../../data/departments"
 
 const CreateEmployee = () => {
   const [form, setForm] = useState({
     firstName: "Prénom",
     lastName: "Nom",
-    birthDate: "2000-01-01",
-    startDate: "2020-12-25",
+    birthDate: new Date("2000-12-25"),
+    startDate: new Date("2023-10-01"),
     street: "123 rue de Paris",
     address: "Adresse",
-    postalCode: "99999",
     city: "City",
+    state: states[0].name,
+    zipCode: "99999",
+    department: departments[0].name,
   })
 
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -34,7 +37,6 @@ const CreateEmployee = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-
     const formElement = e.target
     if (!formElement.checkValidity()) {
       formElement.reportValidity()
@@ -44,99 +46,176 @@ const CreateEmployee = () => {
   }
 
   return (
-    <section className="container_create_employee">
+    <section className="container-create-employee">
       <h1 className="container_create_employee__title">Create Employee</h1>
-
-      <form onSubmit={handleSubmit} noValidate>
-        <SmartInput
-          label="First name"
-          name="firstName"
-          placeholder="Jean"
-          value={form.firstName}
-          onChange={handleChange}
-          required
-          minLength={2}
-          errorMessage="At least 2 characters"
-        />
-        <SmartInput
-          label="Last name"
-          name="lastName"
-          placeholder="Dupont"
-          value={form.lastName}
-          onChange={handleChange}
-          required
-          minLength={2}
-          errorMessage="At least 2 characters"
-        />
-        <SmartInput
-          label="Date of birth"
-          name="birthDate"
-          type="date"
-          value={form.birthDate}
-          onChange={handleChange}
-          required
-          dateValidity={{
-            futureAllowed: false,
-            minimumAge: 16,
-          }}
-        />
-        <SmartInput
-          label="Start date"
-          name="startDate"
-          type="date"
-          value={form.startDate}
-          onChange={handleChange}
-          required
-          dateValidity={{
-            futureAllowed: true,
-          }}
-        />
-        <fieldset>
-          <legend>Address</legend>
-
-          <SmartInput
-            label="Street"
-            name="street"
-            placeholder="123 rue de Paris"
-            value={form.street}
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <form onSubmit={handleSubmit}>
+          <TextField
+            className="container-create-employee__textField"
+            label="First name"
+            name="firstName"
+            value={form.firstName}
             onChange={handleChange}
+            placeholder="Jean"
             required
-            minLength={2}
-            errorMessage="At least 2 characters"
+            fullWidth
+            variant="outlined"
+            error={form.firstName.length < 2}
+            helperText={
+              form.firstName.length < 2
+                ? "First name must be at least 2 characters"
+                : ""
+            }
           />
-          <SmartInput
-            label="City"
-            name="city"
-            placeholder="Paris"
-            value={form.city}
+          <TextField
+            className="container-create-employee__textField"
+            label="Last name"
+            name="lastName"
+            value={form.lastName}
             onChange={handleChange}
+            placeholder="Doe"
             required
-            minLength={1}
-            errorMessage="Enter a city name"
+            fullWidth
+            variant="outlined"
+            error={form.lastName.length < 2}
+            helperText={
+              form.lastName.length < 2
+                ? "Last name must be at least 2 characters"
+                : ""
+            }
           />
-          <label htmlFor="state">State</label>
-          <select>
-            {states.map((state) => (
-              <option key={state.abbreviation} value={state.abbreviation}>
-                {state.name}
-              </option>
-            ))}
-          </select>
-
-          <SmartInput
-            label="Zip code"
-            name="postalCode"
-            placeholder="75000"
-            value={form.postalCode}
-            onChange={handleChange}
-            required
-            pattern="\d{5}"
-            errorMessage="5 digits"
+          <DatePicker
+            label="Date of Birth"
+            value={form.birthDate}
+            onChange={(newValue) =>
+              setForm((prev) => ({ ...prev, birthDate: newValue }))
+            }
+            slotProps={{
+              textField: {
+                variant: "outlined",
+                fullWidth: true,
+              },
+            }}
           />
-        </fieldset>
+          <DatePicker
+            label="Start date"
+            value={form.startDate}
+            onChange={(newValue) =>
+              setForm((prev) => ({ ...prev, startDate: newValue }))
+            }
+            slotProps={{
+              textField: {
+                variant: "outlined",
+                fullWidth: true,
+              },
+            }}
+          />
 
-        <button type="submit">Save</button>
-      </form>
+          <fieldset
+            className="container-create-employee__fieldset"
+            style={{
+
+            }}
+          >
+            <legend>Address</legend>
+            <TextField
+              className="container-create-employee__textField"
+              label="Street"
+              name="street"
+              value={form.street}
+              onChange={handleChange}
+              placeholder="123 rue de Paris"
+              required
+              fullWidth
+              variant="outlined"
+              error={form.street.length < 2}
+              helperText={
+                form.street.length < 2
+                  ? "Street must be at least 2 characters"
+                  : ""
+              }
+            />
+            <TextField
+              className="container-create-employee__textField"
+              label="City"
+              name="city"
+              value={form.city}
+              onChange={handleChange}
+              placeholder="Gotham City"
+              required
+              fullWidth
+              variant="outlined"
+              error={form.city.length < 2}
+              helperText={
+                form.city.length < 2 ? "City must be at least 2 characters" : ""
+              }
+            />
+            <FormControl fullWidth variant="outlined" required>
+              <InputLabel id="state-label">State</InputLabel>
+              <Select
+                className="container-create-employee__textField"
+                labelId="state-label"
+                id="state"
+                name="stae"
+                value={form.state}
+                onChange={handleChange}
+                label="State"
+              >
+                {states.map((state) => (
+                  <MenuItem key={state.abbreviation} value={state.name}>
+                    {state.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <TextField
+              className="container-create-employee__textField"
+              label="Zip Code"
+              name="zipCode"
+              value={form.zipCode}
+              onChange={handleChange}
+              placeholder="75001"
+              required
+              fullWidth
+              variant="outlined"
+              inputProps={{
+                inputMode: "numeric",
+                pattern: "[0-9]{5}",
+                maxLength: 5,
+              }}
+              error={!/^\d{5}$/.test(form.zipCode)}
+              helperText={
+                !/^\d{5}$/.test(form.zipCode)
+                  ? "Enter a valid 5-digit zip code"
+                  : ""
+              }
+            />
+          </fieldset>
+
+          <FormControl fullWidth variant="outlined" required>
+            <InputLabel id="department-label">Department</InputLabel>
+            <Select
+              className="container-create-employee__textField"
+              labelId="department-label"
+              id="department"
+              name="department"
+              value={form.department}
+              onChange={handleChange}
+              label="Department"
+            >
+              {departments.map((department) => (
+                <MenuItem key={department.name} value={department.name}>
+                  {department.text}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <Button type="submit" variant="contained" color="primary">
+            Save
+          </Button>
+        </form>
+      </LocalizationProvider>
 
       <Modal
         isOpen={isModalOpen}
@@ -144,12 +223,21 @@ const CreateEmployee = () => {
         modalElements={{
           title: "HRNET",
           subtitle: "New employee created",
-          text: `Employee '${form.firstName} ${form.lastName}' has been created successfully`,
-          htmlElement:`<p>Employee '${form.firstName} ${form.lastName}' has been created successfully</p>`,
+          htmlElement: (
+            <p>
+              Employee '
+              <span style={{ fontStyle: "italic", color: "blue" }}>
+                {form.firstName} {form.lastName}
+              </span>
+              ' has been created successfully
+            </p>
+          ),
         }}
         modalOptions={{
           headerBackgroundColor: "lightgreen",
           headerTextColor: "black",
+          backdropColor: "rgba(0, 0, 0, 0.5)",
+          shadowed: true,
         }}
       ></Modal>
     </section>
