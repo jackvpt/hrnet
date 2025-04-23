@@ -26,7 +26,7 @@ const Header = () => {
           className={({ isActive }) =>
             isActive ? "navbar__link--active" : "navbar__link"
           }
-          to="/viewEmployees" // Links to Home page
+          to="/view" // Links to View page
         >
           View
         </NavLink>

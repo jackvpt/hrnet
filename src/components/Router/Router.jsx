@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Header from "../Header/Header"
 import Error from "../../pages/Error/Error"
 import CreateEmployee from "../../pages/CreateEmployee/CreateEmployee"
+import View from "../../pages/View/View"
 
 /**
  * Manages the routing of the application using React Router.
@@ -25,6 +26,7 @@ export default function Router() {
           <Routes>
             {/* Catch-CreateEmployee route */}
             <Route path="/create_employee" element={<CreateEmployee />} />
+            <Route path="/view" element={<View />} />
             {/* Catch-all route for 404 errors */}
             <Route path="*" element={<Error />} />
           </Routes>
