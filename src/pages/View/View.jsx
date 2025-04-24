@@ -1,6 +1,5 @@
 import "./View.scss"
 import React, { useState } from "react"
-import { useQuery } from "@tanstack/react-query"
 import {
   Table,
   TablePagination,
@@ -13,7 +12,7 @@ import {
   TextField,
   Paper,
 } from "@mui/material"
-import { fetchEmployees } from "../../api/employees"
+import { useEmployees } from "../../hooks/useEmployees"
 
 function getValueByPath(obj, path) {
   return path.split(".").reduce((o, key) => (o ? o[key] : undefined), obj)
@@ -60,21 +59,14 @@ const View = () => {
     setPage(0)
   }
 
-  const {
-    data: employees,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["employees"],
-    queryFn: () => fetchEmployees(),
-  })
-
   const handleSearch = (event) => {
     setSearchQuery(event.target.value)
   }
 
-  if (isLoading) return <p>Chargement...</p>
-  if (error) return <p>Erreur lors du chargement des données</p>
+  const { data: employees, isLoading, isError } = useEmployees()
+
+  if (isLoading) return <p>Loading...</p>
+  if (isError) return <p>Error while loading data</p>
 
   const filteredData = employees.filter((entry) => {
     const query = searchQuery.toLowerCase()
@@ -126,7 +118,7 @@ const View = () => {
           <TableHead>
             <TableRow>
               {/* First name */}
-              <TableCell sx={{ textAlign: "center",width:200 }}>
+              <TableCell sx={{ textAlign: "center", width: 200 }}>
                 <TableSortLabel
                   active={orderBy === "firstName"}
                   direction={orderBy === "firstName" ? order : "asc"}
@@ -137,7 +129,7 @@ const View = () => {
               </TableCell>
 
               {/* Last name */}
-              <TableCell sx={{ textAlign: "center",width:200 }}>
+              <TableCell sx={{ textAlign: "center", width: 200 }}>
                 <TableSortLabel
                   active={orderBy === "lastName"}
                   direction={orderBy === "lastName" ? order : "asc"}
@@ -148,7 +140,7 @@ const View = () => {
               </TableCell>
 
               {/* Start date */}
-              <TableCell sx={{ textAlign: "center",width:150 }}>
+              <TableCell sx={{ textAlign: "center", width: 150 }}>
                 <TableSortLabel
                   active={orderBy === "startDate"}
                   direction={orderBy === "startDate" ? order : "asc"}
@@ -159,7 +151,7 @@ const View = () => {
               </TableCell>
 
               {/* Department */}
-              <TableCell sx={{ textAlign: "center",width:180 }}>
+              <TableCell sx={{ textAlign: "center", width: 180 }}>
                 <TableSortLabel
                   active={orderBy === "department"}
                   direction={orderBy === "department" ? order : "asc"}
@@ -170,7 +162,7 @@ const View = () => {
               </TableCell>
 
               {/* Date of birth */}
-              <TableCell sx={{ textAlign: "center",width:150 }}>
+              <TableCell sx={{ textAlign: "center", width: 150 }}>
                 <TableSortLabel
                   active={orderBy === "birthDate"}
                   direction={orderBy === "birthDate" ? order : "asc"}
@@ -181,7 +173,7 @@ const View = () => {
               </TableCell>
 
               {/* Street */}
-              <TableCell sx={{ textAlign: "center",width:200 }}>
+              <TableCell sx={{ textAlign: "center", width: 200 }}>
                 <TableSortLabel
                   active={orderBy === "address.street"}
                   direction={orderBy === "address.street" ? order : "asc"}
@@ -192,8 +184,8 @@ const View = () => {
               </TableCell>
 
               {/* City */}
-              <TableCell sx={{ textAlign: "center",width:200 }}>
-              <TableSortLabel
+              <TableCell sx={{ textAlign: "center", width: 200 }}>
+                <TableSortLabel
                   active={orderBy === "address.city"}
                   direction={orderBy === "address.city" ? order : "asc"}
                   onClick={() => handleRequestSort("address.city")}
@@ -214,7 +206,7 @@ const View = () => {
               </TableCell>
 
               {/* Zipcode */}
-              <TableCell sx={{ textAlign: "center",width:150 }}>
+              <TableCell sx={{ textAlign: "center", width: 150 }}>
                 <TableSortLabel
                   active={orderBy === "address.zipCode"}
                   direction={orderBy === "address.zipCode" ? order : "asc"}
@@ -237,15 +229,33 @@ const View = () => {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row) => (
                   <TableRow hover key={row.id}>
-                    <TableCell sx={{textAlign:"center"}}>{row.firstName}</TableCell>
-                    <TableCell sx={{textAlign:"center"}}>{row.lastName}</TableCell>
-                    <TableCell sx={{textAlign:"center"}}>{row.startDate}</TableCell>
-                    <TableCell sx={{textAlign:"center"}}>{row.department}</TableCell>
-                    <TableCell sx={{textAlign:"center"}}>{row.birthDate}</TableCell>
-                    <TableCell sx={{textAlign:"center"}}>{row.address.street}</TableCell>
-                    <TableCell sx={{textAlign:"center"}}>{row.address.city}</TableCell>
-                    <TableCell sx={{textAlign:"center"}}>{row.address.state}</TableCell>
-                    <TableCell sx={{textAlign:"center"}}>{row.address.zipCode}</TableCell>
+                    <TableCell sx={{ textAlign: "center" }}>
+                      {row.firstName}
+                    </TableCell>
+                    <TableCell sx={{ textAlign: "center" }}>
+                      {row.lastName}
+                    </TableCell>
+                    <TableCell sx={{ textAlign: "center" }}>
+                      {row.startDate}
+                    </TableCell>
+                    <TableCell sx={{ textAlign: "center" }}>
+                      {row.department}
+                    </TableCell>
+                    <TableCell sx={{ textAlign: "center" }}>
+                      {row.birthDate}
+                    </TableCell>
+                    <TableCell sx={{ textAlign: "center" }}>
+                      {row.address.street}
+                    </TableCell>
+                    <TableCell sx={{ textAlign: "center" }}>
+                      {row.address.city}
+                    </TableCell>
+                    <TableCell sx={{ textAlign: "center" }}>
+                      {row.address.state}
+                    </TableCell>
+                    <TableCell sx={{ textAlign: "center" }}>
+                      {row.address.zipCode}
+                    </TableCell>
                   </TableRow>
                 ))
             )}
