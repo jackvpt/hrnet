@@ -14,3 +14,8 @@ export const fetchEmployees = async () => {
       throw error
     }
   }
+
+  export const createEmployee = async (employeeData) => {
+    console.log('Mock employee created:', employeeData);
+    return employeeData;
+  };

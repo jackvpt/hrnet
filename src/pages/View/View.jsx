@@ -1,5 +1,6 @@
 import "./View.scss"
 import React, { useState } from "react"
+import { useSelector } from "react-redux"
 import {
   Table,
   TablePagination,
@@ -12,7 +13,7 @@ import {
   TextField,
   Paper,
 } from "@mui/material"
-import { useEmployees } from "../../hooks/useEmployees"
+import { EmployeeModel } from "../../models/employeeModel"
 
 function getValueByPath(obj, path) {
   return path.split(".").reduce((o, key) => (o ? o[key] : undefined), obj)
@@ -63,10 +64,16 @@ const View = () => {
     setSearchQuery(event.target.value)
   }
 
-  const { data: employees, isLoading, isError } = useEmployees()
+  const {
+    list: employeesRaw,
+    status,
+    error,
+  } = useSelector((state) => state.employees)
 
-  if (isLoading) return <p>Loading...</p>
-  if (isError) return <p>Error while loading data</p>
+const employees = employeesRaw.map((e) => new EmployeeModel(e))
+
+  if (status === "loading") return <p>Loading...</p>
+  if (status === "failed") return <p>Error while loading data: {error}</p>
 
   const filteredData = employees.filter((entry) => {
     const query = searchQuery.toLowerCase()
@@ -236,13 +243,13 @@ const View = () => {
                       {row.lastName}
                     </TableCell>
                     <TableCell sx={{ textAlign: "center" }}>
-                      {row.startDate}
+                      {row.getFormattedStartDate()}
                     </TableCell>
                     <TableCell sx={{ textAlign: "center" }}>
                       {row.department}
                     </TableCell>
                     <TableCell sx={{ textAlign: "center" }}>
-                      {row.birthDate}
+                      {row.getFormattedBirthDate()}
                     </TableCell>
                     <TableCell sx={{ textAlign: "center" }}>
                       {row.address.street}

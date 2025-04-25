@@ -1,5 +1,6 @@
 import "./CreateEmployee.scss"
 import { useState } from "react"
+import { useDispatch } from "react-redux"
 import {
   TextField,
   Select,
@@ -13,6 +14,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns"
 import Modal from "../../components/Modal/Modal"
 import states from "../../data/states"
 import departments from "../../data/departments"
+import { addEmployee } from "../../features/employeesSlice"
 
 const CreateEmployee = () => {
   const [form, setForm] = useState({
@@ -20,19 +22,32 @@ const CreateEmployee = () => {
     lastName: "Nom",
     birthDate: new Date("2000-12-25"),
     startDate: new Date("2023-10-01"),
-    street: "123 rue de Paris",
-    address: "Adresse",
-    city: "City",
-    state: states[0].name,
-    zipCode: "99999",
+    address: {
+      street: "123 rue de Paris",
+      city: "City",
+      state: states[0].name,
+      zipCode: "99999",
+    },
     department: departments[0].name,
   })
+
+  const dispatch = useDispatch()
 
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const handleChange = (e) => {
     const { name, value } = e.target
-    setForm((prev) => ({ ...prev, [name]: value }))
+    if (["street", "city", "state", "zipCode"].includes(name)) {
+      setForm((prev) => ({
+        ...prev,
+        address: {
+          ...prev.address,
+          [name]: value,
+        },
+      }))
+    } else {
+      setForm((prev) => ({ ...prev, [name]: value }))
+    }
   }
 
   const handleSubmit = (e) => {
@@ -42,6 +57,12 @@ const CreateEmployee = () => {
       formElement.reportValidity()
       return
     }
+
+    const newEmployee = {
+      ...form,
+    }
+
+    dispatch(addEmployee(newEmployee))
     setIsModalOpen(true)
   }
 
@@ -111,26 +132,21 @@ const CreateEmployee = () => {
             }}
           />
 
-          <fieldset
-            className="container-create-employee__fieldset"
-            style={{
-
-            }}
-          >
+          <fieldset className="container-create-employee__fieldset" style={{}}>
             <legend>Address</legend>
             <TextField
               className="container-create-employee__textField"
               label="Street"
               name="street"
-              value={form.street}
+              value={form.address.street}
               onChange={handleChange}
               placeholder="123 rue de Paris"
               required
               fullWidth
               variant="outlined"
-              error={form.street.length < 2}
+              error={form.address.street.length < 2}
               helperText={
-                form.street.length < 2
+                form.address.street.length < 2
                   ? "Street must be at least 2 characters"
                   : ""
               }
@@ -139,15 +155,17 @@ const CreateEmployee = () => {
               className="container-create-employee__textField"
               label="City"
               name="city"
-              value={form.city}
+              value={form.address.city}
               onChange={handleChange}
               placeholder="Gotham City"
               required
               fullWidth
               variant="outlined"
-              error={form.city.length < 2}
+              error={form.address.city.length < 2}
               helperText={
-                form.city.length < 2 ? "City must be at least 2 characters" : ""
+                form.address.city.length < 2
+                  ? "City must be at least 2 characters"
+                  : ""
               }
             />
             <FormControl fullWidth variant="outlined" required>
@@ -157,7 +175,7 @@ const CreateEmployee = () => {
                 labelId="state-label"
                 id="state"
                 name="stae"
-                value={form.state}
+                value={form.address.state}
                 onChange={handleChange}
                 label="State"
               >
@@ -172,7 +190,7 @@ const CreateEmployee = () => {
               className="container-create-employee__textField"
               label="Zip Code"
               name="zipCode"
-              value={form.zipCode}
+              value={form.address.zipCode}
               onChange={handleChange}
               placeholder="75001"
               required
@@ -183,9 +201,9 @@ const CreateEmployee = () => {
                 pattern: "[0-9]{5}",
                 maxLength: 5,
               }}
-              error={!/^\d{5}$/.test(form.zipCode)}
+              error={!/^\d{5}$/.test(form.address.zipCode)}
               helperText={
-                !/^\d{5}$/.test(form.zipCode)
+                !/^\d{5}$/.test(form.address.zipCode)
                   ? "Enter a valid 5-digit zip code"
                   : ""
               }

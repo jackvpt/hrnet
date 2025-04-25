@@ -20,15 +20,15 @@ for (let i = 0; i < totalEntries; i++) {
 
   const record = {
     id: faker.string.uuid(), // Génère un UUID pour l'id
-    firstName: faker.name.firstName(), // Génère un prénom
-    lastName: faker.name.lastName(), // Génère un nom de famille
+    firstName: faker.person.firstName(), // Génère un prénom
+    lastName: faker.person.lastName(), // Génère un nom de famille
     birthDate: birthDate.toISOString().split("T")[0], // Convertit la date de naissance au format YYYY-MM-DD
     startDate: startDate.toISOString().split("T")[0], // Convertit la date de début au format YYYY-MM-DD
     address: {
-      street: faker.address.streetAddress(), // Génère une adresse
-      city: faker.address.city(), // Génère une ville
-      state: faker.address.state(), // Génère un état
-      zipCode: faker.address.zipCode(), // Génère un code postal
+      street: faker.location.streetAddress(), // Génère une adresse
+      city: faker.location.city(), // Génère une ville
+      state: faker.location.state(), // Génère un état
+      zipCode: faker.number.int({ min: 10000, max: 99999 }).toString(), // Génère un code postal
     },
     department: departments[Math.floor(Math.random() * departments.length)], // Choisit un département aléatoire
   }
