@@ -15,10 +15,23 @@ import {
 } from "@mui/material"
 import { EmployeeModel } from "../../models/employeeModel"
 
+/**
+ * Safely gets a nested value from an object using a dot-separated path.
+ * @param {Object} obj - The object to extract the value from.
+ * @param {string} path - Dot-separated path (e.g., "address.city").
+ * @returns {*} - The value at the given path or undefined if not found.
+ */
 function getValueByPath(obj, path) {
   return path.split(".").reduce((o, key) => (o ? o[key] : undefined), obj)
 }
 
+/**
+ * Compares two values in descending order based on a property path.
+ * @param {Object} a - First item to compare.
+ * @param {Object} b - Second item to compare.
+ * @param {string} orderBy - Property path used for comparison.
+ * @returns {number} - Returns -1, 0, or 1.
+ */
 function descendingComparator(a, b, orderBy) {
   const aValue = getValueByPath(a, orderBy)
   const bValue = getValueByPath(b, orderBy)
@@ -28,12 +41,25 @@ function descendingComparator(a, b, orderBy) {
   return 0
 }
 
+/**
+ * Returns a comparator function based on the given order and property.
+ * @param {"asc" | "desc"} order - Sort order.
+ * @param {string} orderBy - Property path to sort by.
+ * @returns {Function} - Comparator function.
+ */
 function getComparator(order, orderBy) {
   return order === "desc"
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy)
 }
 
+/**
+ * Performs a stable sort on an array using the provided comparator.
+ * Maintains original order for equal elements.
+ * @param {Array} array - Array to sort.
+ * @param {Function} comparator - Comparator function.
+ * @returns {Array} - Sorted array.
+ */
 function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index])
   stabilizedThis.sort((a, b) => {
@@ -44,6 +70,14 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0])
 }
 
+/**
+ * React component that displays a list of employees in a Material UI table.
+ * It supports searching, sorting by column, and pagination.
+ *
+ * Data is pulled from the Redux store and transformed into `EmployeeModel` instances.
+ *
+ * @returns {JSX.Element} The rendered employee table view.
+ */
 const View = () => {
   const [order, setOrder] = useState("asc")
   const [orderBy, setOrderBy] = useState("lastName")

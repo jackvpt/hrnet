@@ -16,6 +16,23 @@ import states from "../../data/states"
 import departments from "../../data/departments"
 import { addEmployee } from "../../features/employeesSlice"
 
+/**
+ * CreateEmployee component for registering a new employee.
+ *
+ * This component displays a form where the user can input:
+ * - First and last names
+ * - Birth date and start date (with date pickers)
+ * - Address details (street, city, state, zip code)
+ * - Department selection
+ *
+ * It performs basic validation on fields (e.g., minimum length, zip code format)
+ * and dispatches the `addEmployee` action upon form submission.
+ * A confirmation modal appears after a successful submission.
+ *
+ * @category Pages
+ * @component
+ * @returns {JSX.Element} The CreateEmployee form page.
+ */
 const CreateEmployee = () => {
   const [form, setForm] = useState({
     firstName: "Prénom",

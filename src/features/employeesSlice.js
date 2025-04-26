@@ -1,5 +1,18 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 
+/**
+ * Async thunk to load mock employees from a local JSON file.
+ *
+ * Dispatches:
+ * - `loadEmployees.pending`: When the request starts.
+ * - `loadEmployees.fulfilled`: On successful fetch, returns the employee array.
+ * - `loadEmployees.rejected`: If the fetch fails.
+ *
+ * @async
+ * @function
+ * @returns {Promise<Object[]>} The list of mock employees.
+ * @throws {Error} If the fetch fails.
+ */
 export const loadEmployees = createAsyncThunk(
   "employees/loadEmployees",
   async () => {
@@ -9,6 +22,16 @@ export const loadEmployees = createAsyncThunk(
   }
 )
 
+/**
+ * Redux slice for managing the employee list, loading status, and errors.
+ *
+ * State structure:
+ * {
+ *   list: Array<Object>,       // Array of employee objects
+ *   status: "idle" | "loading" | "succeeded" | "failed",  // Async load status
+ *   error: string | null       // Error message if load fails
+ * }
+ */
 const employeesSlice = createSlice({
   name: "employees",
   initialState: {
