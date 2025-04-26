@@ -81,4 +81,20 @@
 
 .modal-htmlElement {
   padding: 10px 20px;
+}
+
+.modal-button-close {
+  margin: 10px 20px 10px auto;
+  padding: 8px 30px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: none;
+  transition: filter 0.3s ease;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+.modal-button-close:hover {
+  filter: brightness(1.2);
+  background-color: white;
 }/*# sourceMappingURL=Modal.css.map */

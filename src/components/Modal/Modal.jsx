@@ -40,7 +40,13 @@ import "./Modal.scss"
  *   fadeDuration={500}
  * />
  */
-const Modal = ({ isOpen, onClose, modalElements, modalOptions = {}, fadeDuration = 300 }) => {
+const Modal = ({
+  isOpen,
+  onClose,
+  modalElements,
+  modalOptions = {},
+  fadeDuration = 300,
+}) => {
   const [visible, setVisible] = useState(isOpen)
   const [fadeState, setFadeState] = useState("fade-in")
 
@@ -86,7 +92,9 @@ const Modal = ({ isOpen, onClose, modalElements, modalOptions = {}, fadeDuration
       }}
     >
       <div
-        className={`modal-content ${modalOptions.shadowed !== false ? "shadowed" : ""}`}
+        className={`modal-content ${
+          modalOptions.shadowed !== false ? "shadowed" : ""
+        }`}
         style={{ transitionDuration: `${fadeDuration}ms` }}
       >
         <div className="modal-header" style={headerStyle}>
@@ -96,8 +104,13 @@ const Modal = ({ isOpen, onClose, modalElements, modalOptions = {}, fadeDuration
           </button>
         </div>
         <h3 className="modal-subtitle">{modalElements.subtitle}</h3>
-        {modalElements.text && <p className="modal-text">{modalElements.text}</p>}
+        {modalElements.text && (
+          <p className="modal-text">{modalElements.text}</p>
+        )}
         <div className="modal-htmlElement">{modalElements.htmlElement}</div>
+        <button className="modal-button-close" onClick={onClose} style={headerStyle}>
+          {modalElements.closeButtonText || "Close"}
+        </button>
       </div>
     </div>
   )
@@ -111,6 +124,7 @@ Modal.propTypes = {
     subtitle: PropTypes.string,
     text: PropTypes.string,
     htmlElement: PropTypes.node,
+    closeButtonText:PropTypes.string,
   }).isRequired,
   modalOptions: PropTypes.shape({
     headerBackgroundColor: PropTypes.string,
