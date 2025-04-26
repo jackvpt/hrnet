@@ -29,7 +29,7 @@ export default function Router() {
           <Routes>
             <Route path="/create_employee" element={<CreateEmployee />} />
             <Route path="/view" element={<View />} />
-            <Route path="*" element={<Error />} />
+            <Route path="*" element={<View />} />
           </Routes>
         </section>
       </main>

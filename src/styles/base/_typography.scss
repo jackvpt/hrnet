@@ -10,11 +10,11 @@
   padding: 0;
 
   @include responsive-tablet {
-    font-size: 16px;
+    font-size: 14px;
   }
 
   @include responsive-desktop {
-    font-size: 20px;
+    font-size: 16px;
   }
 }
 

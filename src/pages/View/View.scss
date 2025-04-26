@@ -1,6 +1,10 @@
-.search-filter-bar{
+.container__table {
+  font-size: 12px !important;
+
+  .search-filter-bar {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+  }
 }

@@ -75,8 +75,13 @@ const CreateEmployee = () => {
       return
     }
 
+    const selectedDepartment = departments.find(
+      (department) => department.name === form.department
+    )
+
     const newEmployee = {
       ...form,
+      department: selectedDepartment.text,
     }
 
     dispatch(addEmployee(newEmployee))
@@ -125,6 +130,7 @@ const CreateEmployee = () => {
           <DatePicker
             label="Date of Birth"
             value={form.birthDate}
+            format="dd/MM/yyyy"
             onChange={(newValue) =>
               setForm((prev) => ({ ...prev, birthDate: newValue }))
             }
@@ -138,6 +144,7 @@ const CreateEmployee = () => {
           <DatePicker
             label="Start date"
             value={form.startDate}
+            format="dd/MM/yyyy"
             onChange={(newValue) =>
               setForm((prev) => ({ ...prev, startDate: newValue }))
             }
@@ -191,7 +198,7 @@ const CreateEmployee = () => {
                 className="container-create-employee__textField"
                 labelId="state-label"
                 id="state"
-                name="stae"
+                name="state"
                 value={form.address.state}
                 onChange={handleChange}
                 label="State"

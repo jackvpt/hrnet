@@ -111,13 +111,15 @@ const View = () => {
 
   const filteredData = employees.filter((entry) => {
     const query = searchQuery.toLowerCase()
+    const startDate= entry.startDate.toLocaleDateString("fr-FR")
+    const birthDate= entry.birthDate.toLocaleDateString("fr-FR")
 
     return (
       entry.firstName.toLowerCase().includes(query) ||
       entry.lastName.toLowerCase().includes(query) ||
       entry.department.toLowerCase().includes(query) ||
-      entry.startDate.toLowerCase().includes(query) ||
-      entry.birthDate.toLowerCase().includes(query) ||
+      startDate.toLowerCase().includes(query) ||
+      birthDate.toLowerCase().includes(query) ||
       entry.address.street.toLowerCase().includes(query) ||
       entry.address.city.toLowerCase().includes(query) ||
       entry.address.state.toLowerCase().includes(query) ||
@@ -132,7 +134,7 @@ const View = () => {
   }
 
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden" }}>
+    <Paper sx={{ width: "100%", overflow: "hidden" }} className="container__table">
       <div className="search-filter-bar">
         {filteredData.length > 0 && (
           <TablePagination
