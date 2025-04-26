@@ -104,7 +104,7 @@ const View = () => {
     error,
   } = useSelector((state) => state.employees)
 
-const employees = employeesRaw.map((e) => new EmployeeModel(e))
+  const employees = employeesRaw.map((e) => new EmployeeModel(e))
 
   if (status === "loading") return <p>Loading...</p>
   if (status === "failed") return <p>Error while loading data: {error}</p>
