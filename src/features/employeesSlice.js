@@ -16,9 +16,17 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 export const loadEmployees = createAsyncThunk(
   "employees/loadEmployees",
   async () => {
+    const localData = localStorage.getItem("employees")
+    if (localData) {
+      return JSON.parse(localData)
+    }
+
     const response = await fetch("/__mocks__/employees.json")
     if (!response.ok) throw new Error("Failed to load mock employees")
-    return await response.json()
+
+    const data = await response.json()
+    localStorage.setItem("employees", JSON.stringify(data))
+    return data
   }
 )
 
@@ -45,7 +53,7 @@ const employeesSlice = createSlice({
         ...action.payload,
         id: crypto.randomUUID(),
         birthDate: action.payload.birthDate.toISOString(),
-        startDate: action.payload.startDate.toISOString()
+        startDate: action.payload.startDate.toISOString(),
       })
     },
   },
@@ -57,6 +65,7 @@ const employeesSlice = createSlice({
       .addCase(loadEmployees.fulfilled, (state, action) => {
         state.status = "succeeded"
         state.list = action.payload
+        localStorage.setItem("employees", JSON.stringify(action.payload))
       })
       .addCase(loadEmployees.rejected, (state, action) => {
         state.status = "failed"

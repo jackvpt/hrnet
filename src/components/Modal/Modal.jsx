@@ -62,6 +62,7 @@ const Modal = ({
   }, [isOpen, fadeDuration])
 
   useEffect(() => {
+    if (!visible) return
     const handleEscape = (e) => {
       if (e.key === "Escape") {
         onClose()
@@ -69,7 +70,7 @@ const Modal = ({
     }
     document.addEventListener("keydown", handleEscape)
     return () => document.removeEventListener("keydown", handleEscape)
-  }, [onClose])
+  }, [visible, onClose])
 
   if (!visible) return null
 
@@ -86,7 +87,7 @@ const Modal = ({
         transitionDuration: `${fadeDuration}ms`,
       }}
       onClick={(e) => {
-        if (e.target.className.includes("modal-backdrop")) {
+        if (e.target === e.currentTarget) {
           onClose()
         }
       }}
@@ -96,6 +97,8 @@ const Modal = ({
           modalOptions.shadowed !== false ? "shadowed" : ""
         }`}
         style={{ transitionDuration: `${fadeDuration}ms` }}
+          role="dialog"
+  aria-modal="true"
       >
         <div className="modal-header" style={headerStyle}>
           <h2 className="modal-title">{modalElements.title}</h2>
