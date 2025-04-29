@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "test": "vitest"
   },
   "homepage": "https://jackvpt.github.io/hrnet",
   "dependencies": {
@@ -27,18 +28,20 @@
     "@tanstack/react-query": "^5.74.4",
     "@tanstack/react-query-devtools": "^5.74.6",
     "date-fns": "^4.1.0",
-    "gh-pages": "^6.3.0",
     "jsdoc": "^4.0.4",
     "prop-types": "^15.8.1",
     "react": "^19.0.0",
     "react-dom": "^19.1.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.5.0",
-    "react-toastify": "^11.0.5",
     "sass": "^1.86.3"
   },
   "devDependencies": {
+    "@babel/preset-react": "^7.26.3",
     "@eslint/js": "^9.21.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react-swc": "^3.8.0",
@@ -46,6 +49,8 @@
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^15.15.0",
-    "vite": "^6.2.0"
+    "jsdom": "^26.1.0",
+    "vite": "^6.2.0",
+    "vitest": "^3.1.2"
   }
 }

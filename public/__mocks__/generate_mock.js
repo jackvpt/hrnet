@@ -11,7 +11,7 @@ const departments = [
 ]
 
 const data = []
-const totalEntries = 500 // Nombre d'entrées à générer
+const totalEntries = 1000 // Nombre d'entrées à générer
 
 for (let i = 0; i < totalEntries; i++) {
   // Génération de dates aléatoires
