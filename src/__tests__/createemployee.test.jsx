@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react"
+import { render, screen, fireEvent, waitFor, within } from "@testing-library/react"
 import { Provider } from "react-redux"
 import { configureStore } from "@reduxjs/toolkit"
 import employeesReducer from "../features/employeesSlice"
@@ -37,5 +37,14 @@ describe("CreateEmployee integration test", () => {
     fireEvent.change(screen.getByLabelText(/Zip Code/i), {
       target: { value: "12345" },
     })
+    // Soumettre le formulaire
+    fireEvent.click(screen.getByRole("button", { name: /Save/i }))
+    // Attendre que le modal s'affiche avec le texte de confirmation
+    await waitFor(() => {
+        const modal = screen.getByRole("dialog") // ou un conteneur connu
+        expect(within(modal).findAllByText((_, node) =>
+          node.textContent.includes("Employee 'John Doe' has been created successfully")
+        ))
+      })
   })
 })

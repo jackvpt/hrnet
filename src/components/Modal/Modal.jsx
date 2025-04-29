@@ -97,8 +97,8 @@ const Modal = ({
           modalOptions.shadowed !== false ? "shadowed" : ""
         }`}
         style={{ transitionDuration: `${fadeDuration}ms` }}
-          role="dialog"
-  aria-modal="true"
+        role="dialog"
+        aria-modal="true"
       >
         <div className="modal-header" style={headerStyle}>
           <h2 className="modal-title">{modalElements.title}</h2>
@@ -111,7 +111,11 @@ const Modal = ({
           <p className="modal-text">{modalElements.text}</p>
         )}
         <div className="modal-htmlElement">{modalElements.htmlElement}</div>
-        <button className="modal-button-close" onClick={onClose} style={headerStyle}>
+        <button
+          className="modal-button-close"
+          onClick={onClose}
+          style={headerStyle}
+        >
           {modalElements.closeButtonText || "Close"}
         </button>
       </div>
@@ -127,7 +131,7 @@ Modal.propTypes = {
     subtitle: PropTypes.string,
     text: PropTypes.string,
     htmlElement: PropTypes.node,
-    closeButtonText:PropTypes.string,
+    closeButtonText: PropTypes.string,
   }).isRequired,
   modalOptions: PropTypes.shape({
     headerBackgroundColor: PropTypes.string,
