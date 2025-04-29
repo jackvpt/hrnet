@@ -84,7 +84,10 @@ src/
 ├── components/         # Reusable UI components (Modal, Input, Table...)
 ├── data/               # Constant data (departments, states)
 ├── features/           # Redux slices (employeeSlice)
+├── models/             # Models
 ├── pages/              # Main pages (CreateEmployee, EmployeeList)
+├── store/              # Redux store
+├── styles/             # SCSS styles
 ├── __tests__/          # Unit and integration tests
 ├── App.jsx             # Main routing logic
 └── main.jsx            # React entry point
@@ -107,15 +110,9 @@ See the `LICENSE` file for details.
 
 ## 👨‍💻 Author
 
-Developed by **[Your Name]**  
-GitHub: https://github.com/your-username
+Developed by **jackvpt**  
+GitHub: https://github.com/jackvpt
 
 ---
 
-## 🙌 Acknowledgments
 
-- [OpenClassrooms](https://openclassrooms.com/)
-- [Material UI](https://mui.com/)
-- [Redux Toolkit](https://redux-toolkit.js.org/)
-- [Vitest](https://vitest.dev/)
-- [Testing Library](https://testing-library.com/)
