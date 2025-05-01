@@ -11,7 +11,7 @@ import {
 } from "@mui/material"
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers"
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns"
-import Modal from "../../components/Modal/Modal"
+import  Modal from "../../components/Modal/Modal"
 import states from "../../data/states"
 import departments from "../../data/departments"
 import { addEmployee } from "../../features/employeesSlice"
