@@ -276,8 +276,8 @@ const CreateEmployee = () => {
           ),
         }}
         modalOptions={{
-          headerBackgroundColor: "lightgreen",
-          headerTextColor: "black",
+          headerBackgroundColor: "#107ACA",
+          headerTextColor: "#fff",
           backdropColor: "rgba(0, 0, 0, 0.8)",
           shadowed: true,
         }}
