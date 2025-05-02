@@ -4,6 +4,7 @@ import { useSelector } from "react-redux"
 import {
   Table,
   TablePagination,
+  Pagination,
   TableBody,
   TableCell,
   TableContainer,
@@ -111,8 +112,8 @@ const View = () => {
 
   const filteredData = employees.filter((entry) => {
     const query = searchQuery.toLowerCase()
-    const startDate= entry.startDate.toLocaleDateString("fr-FR")
-    const birthDate= entry.birthDate.toLocaleDateString("fr-FR")
+    const startDate = entry.startDate.toLocaleDateString("fr-FR")
+    const birthDate = entry.birthDate.toLocaleDateString("fr-FR")
 
     return (
       entry.firstName.toLowerCase().includes(query) ||
@@ -134,20 +135,34 @@ const View = () => {
   }
 
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden" }} className="container__table">
+    <Paper
+      sx={{ width: "100%", overflow: "hidden" }}
+      className="container__table"
+    >
       <div className="search-filter-bar">
         {filteredData.length > 0 && (
-          <TablePagination
-            rowsPerPageOptions={[10, 25, 50, 100]}
-            component="div"
-            count={filteredData.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-            labelRowsPerPage="Show"
-            labelDisplayedRows={() => `entries`}
-          />
+          <>
+            <TablePagination
+              rowsPerPageOptions={[10, 25, 50, 100]}
+              component="div"
+              count={filteredData.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              labelRowsPerPage="Show"
+              labelDisplayedRows={() => `entries`}
+              ActionsComponent={()=> null}
+
+            />
+            <div
+              style={{
+                padding: "10px",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            ></div>
+          </>
         )}
         <TextField
           label="Search"
@@ -306,7 +321,7 @@ const View = () => {
         </Table>
       </TableContainer>
       {filteredData.length > 0 && (
-        <>
+        <section className="container__pagination">
           <div style={{ padding: "10px" }}>
             <span>
               Showing {filteredData.length === 0 ? 0 : page * rowsPerPage + 1}{" "}
@@ -314,7 +329,15 @@ const View = () => {
               {filteredData.length} entries
             </span>
           </div>
-        </>
+          <Pagination
+            count={Math.ceil(filteredData.length / rowsPerPage)}
+            page={page + 1}
+            onChange={(event, value) => setPage(value - 1)}
+            color="primary"
+            showFirstButton
+            showLastButton
+          />
+        </section>
       )}
     </Paper>
   )
