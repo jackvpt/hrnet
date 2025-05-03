@@ -1,25 +1,24 @@
 const departments = [
   {
     name: "sales",
-    text:"Sales"
+    text: "Sales",
   },
   {
     name: "marketing",
-    text:"Marketing"
+    text: "Marketing",
   },
   {
     name: "engineering",
-    text:"Engineering"
+    text: "Engineering",
   },
   {
     name: "human_resources",
-    text:"Human Resources"
+    text: "Human Resources",
   },
   {
     name: "legal",
-    text:"Legal"
+    text: "Legal",
   },
-
 ]
 
 export default departments

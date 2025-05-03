@@ -152,8 +152,7 @@ const View = () => {
               onRowsPerPageChange={handleChangeRowsPerPage}
               labelRowsPerPage="Show"
               labelDisplayedRows={() => `entries`}
-              ActionsComponent={()=> null}
-
+              ActionsComponent={() => null}
             />
             <div
               style={{

@@ -5,10 +5,10 @@ import Router from "./components/Router/Router" // Import the application's rout
 
 /**
  * Main application component.
- * 
+ *
  * - Dispatches the `loadEmployees` action when the component mounts.
  * - Renders the `Router` component to handle application routes.
- * 
+ *
  * @component
  * @returns {JSX.Element} The rendered Router component
  */

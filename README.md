@@ -1,4 +1,3 @@
-
 # HRnet – Employee Management Application
 
 **HRnet** is a modern React-based application for managing employee records in a company.  
@@ -114,5 +113,3 @@ Developed by **jackvpt**
 GitHub: https://github.com/jackvpt
 
 ---
-
-

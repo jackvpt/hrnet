@@ -10,7 +10,7 @@ import employeesReducer from "../features/employeesSlice"
 
 /**
  * The Redux store, configured with the employees reducer.
- * 
+ *
  * @type {Object} Redux store instance
  */
 const store = configureStore({

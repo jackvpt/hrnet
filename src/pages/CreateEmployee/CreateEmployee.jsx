@@ -134,6 +134,7 @@ const CreateEmployee = () => {
             onChange={(newValue) =>
               setForm((prev) => ({ ...prev, birthDate: newValue }))
             }
+            maxDate={new Date()}
             slotProps={{
               textField: {
                 variant: "outlined",
