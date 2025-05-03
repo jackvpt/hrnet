@@ -13,7 +13,10 @@ import {
   TableSortLabel,
   TextField,
   Paper,
+  InputAdornment,
+  IconButton,
 } from "@mui/material"
+import ClearIcon from "@mui/icons-material/Clear"
 import { EmployeeModel } from "../../models/employeeModel"
 
 /**
@@ -134,6 +137,10 @@ const View = () => {
     setOrderBy(property)
   }
 
+  const handleClear = () => {
+    setSearchQuery("")
+  }
+
   return (
     <Paper
       sx={{ width: "100%", overflow: "hidden" }}
@@ -166,8 +173,26 @@ const View = () => {
         <TextField
           label="Search"
           variant="outlined"
+          value={searchQuery}
           onChange={handleSearch}
           sx={{ margin: "10px", marginLeft: "auto" }}
+          slotProps={{
+            input: {
+              endAdornment: (
+                <InputAdornment position="end">
+                  {searchQuery ? (
+                    <IconButton onClick={handleClear} edge="end">
+                      <ClearIcon />
+                    </IconButton>
+                  ) : (
+                    <IconButton disabled sx={{ visibility: "hidden" }}>
+                      <ClearIcon />
+                    </IconButton>
+                  )}
+                </InputAdornment>
+              ),
+            },
+          }}
         />
       </div>
       <TableContainer>
