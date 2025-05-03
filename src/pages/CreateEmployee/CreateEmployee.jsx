@@ -35,15 +35,15 @@ import { addEmployee } from "../../features/employeesSlice"
  */
 const CreateEmployee = () => {
   const [form, setForm] = useState({
-    firstName: "Prénom",
-    lastName: "Nom",
-    birthDate: new Date("2000-12-25"),
-    startDate: new Date("2023-10-01"),
+    firstName: "",
+    lastName: "",
+    birthDate: null,
+    startDate: null,
     address: {
-      street: "123 rue de Paris",
-      city: "City",
+      street: "",
+      city: "",
       state: states[0].name,
-      zipCode: "99999",
+      zipCode: "",
     },
     department: departments[0].name,
   })
@@ -113,9 +113,9 @@ const CreateEmployee = () => {
             required
             fullWidth
             variant="outlined"
-            error={form.firstName.length < 2}
+            error={form.firstName.length < 2 && form.firstName.length > 0}
             helperText={
-              form.firstName.length < 2
+              form.firstName.length < 2 && form.firstName.length > 0
                 ? "First name must be at least 2 characters"
                 : ""
             }
@@ -130,9 +130,9 @@ const CreateEmployee = () => {
             required
             fullWidth
             variant="outlined"
-            error={form.lastName.length < 2}
+            error={form.lastName.length < 2 && form.lastName.length > 0}
             helperText={
-              form.lastName.length < 2
+              form.lastName.length < 2 && form.lastName.length > 0
                 ? "Last name must be at least 2 characters"
                 : ""
             }
@@ -179,9 +179,11 @@ const CreateEmployee = () => {
               required
               fullWidth
               variant="outlined"
-              error={form.address.street.length < 2}
+              error={
+                form.address.street.length < 2 && form.address.street.length > 0
+              }
               helperText={
-                form.address.street.length < 2
+                form.address.street.length < 2 && form.address.street.length > 0
                   ? "Street must be at least 2 characters"
                   : ""
               }
@@ -196,9 +198,11 @@ const CreateEmployee = () => {
               required
               fullWidth
               variant="outlined"
-              error={form.address.city.length < 2}
+              error={
+                form.address.city.length < 2 && form.address.city.length > 0
+              }
               helperText={
-                form.address.city.length < 2
+                form.address.city.length < 2 && form.address.city.length > 0
                   ? "City must be at least 2 characters"
                   : ""
               }
@@ -236,9 +240,13 @@ const CreateEmployee = () => {
                 pattern: "[0-9]{5}",
                 maxLength: 5,
               }}
-              error={!/^\d{5}$/.test(form.address.zipCode)}
+              error={
+                !/^\d{5}$/.test(form.address.zipCode) &&
+                form.address.zipCode.length > 0
+              }
               helperText={
-                !/^\d{5}$/.test(form.address.zipCode)
+                !/^\d{5}$/.test(form.address.zipCode) &&
+                form.address.zipCode.length > 0
                   ? "Enter a valid 5-digit zip code"
                   : ""
               }
