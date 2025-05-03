@@ -15,7 +15,7 @@
 }
 .container-create-employee form button[type=submit] {
   padding: 0.75rem 1.5rem;
-  background-color: #C84754;
+  background-color: #107ACA;
   color: #fff;
   font-size: 1rem;
   font-weight: 600;
@@ -45,4 +45,10 @@
   border: 1px solid #ccc;
   padding: 1rem;
   border-radius: 8px;
+}
+
+.submit-button.Mui-disabled {
+  background-color: #ccc !important;
+  color: #666 !important;
+  cursor: not-allowed !important;
 }/*# sourceMappingURL=CreateEmployee.css.map */

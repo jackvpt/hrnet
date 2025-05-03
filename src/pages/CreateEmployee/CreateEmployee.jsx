@@ -88,6 +88,16 @@ const CreateEmployee = () => {
     setIsModalOpen(true)
   }
 
+  const hasErrors = () => {
+    return (
+      form.firstName.length < 2 ||
+      form.lastName.length < 2 ||
+      form.address.street.length < 2 ||
+      form.address.city.length < 2 ||
+      !/^\d{5}$/.test(form.address.zipCode)
+    )
+  }
+
   return (
     <section className="container-create-employee">
       <h1 className="container_create_employee__title">Create Employee</h1>
@@ -254,7 +264,13 @@ const CreateEmployee = () => {
             </Select>
           </FormControl>
 
-          <Button type="submit" variant="contained" color="primary">
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            disabled={hasErrors()}
+            className="submit-button"
+          >
             Save
           </Button>
         </form>
