@@ -92,6 +92,8 @@ const CreateEmployee = () => {
     return (
       form.firstName.length < 2 ||
       form.lastName.length < 2 ||
+      form.birthDate === null ||
+      form.startDate === null ||
       form.address.street.length < 2 ||
       form.address.city.length < 2 ||
       !/^\d{5}$/.test(form.address.zipCode)
