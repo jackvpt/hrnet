@@ -26,7 +26,7 @@
     "@mui/x-date-pickers": "^8.0.0",
     "@reduxjs/toolkit": "^2.7.0",
     "date-fns": "^4.1.0",
-    "jackvpt-custom-modal": "^1.0.31",
+    "jackvpt-custom-modal": "^1.0.32",
     "jsdoc": "^4.0.4",
     "prop-types": "^15.8.1",
     "react": "^19.0.0",
